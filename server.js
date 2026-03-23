@@ -109,22 +109,8 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'Running Trainer API is running' });
 });
 
-// Add this BEFORE app.listen()
-app.get('/', (req, res) => {
-    res.json({ 
-        message: '🏃 Running Trainer API',
-        endpoints: {
-            health: '/api/health',
-            generatePlan: '/api/generate-plan (POST)'
-        }
-    });
-});
-
 // Start server
 app.listen(PORT, () => {
     console.log(`🏃 Running Trainer server running on http://localhost:${PORT}`);
     console.log(`📡 Using Qwen Model: ${QWEN_MODEL}`);
 });
-
-// Add this at the very end of server.js
-module.exports = app;
