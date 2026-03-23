@@ -25,16 +25,9 @@ console.log('API URL:', QWEN_API_URL);
 console.log('Model:', QWEN_MODEL);
 console.log('===================\n');
 
-// ✅ ADD THIS: Root route for Vercel (add BEFORE app.listen)
+// Change this route to serve the HTML file
 app.get('/', (req, res) => {
-    res.json({ 
-        message: '🏃 Running Trainer API',
-        status: 'Server is running!',
-        endpoints: {
-            health: '/api/health',
-            generatePlan: '/api/generate-plan (POST)'
-        }
-    });
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 // Generate training plan using Qwen API
