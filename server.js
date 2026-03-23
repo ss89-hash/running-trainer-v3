@@ -13,17 +13,29 @@ app.use(express.static('public'));
 
 // Qwen API Configuration
 const QWEN_API_KEY = process.env.QWEN_API_KEY;
+// ✅ FIXED: Removed trailing spaces from URL
 const QWEN_API_URL = process.env.QWEN_API_URL || 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
 const QWEN_MODEL = process.env.QWEN_MODEL || 'qwen-plus';
 
-// === ADD THIS DEBUG SECTION ===
+// === DEBUG SECTION ===
 console.log('\n=== 🔍 DEBUG INFO ===');
 console.log('API Key loaded:', QWEN_API_KEY ? `Yes (${QWEN_API_KEY.length} chars)` : 'NO');
 console.log('API Key value:', QWEN_API_KEY);
 console.log('API URL:', QWEN_API_URL);
 console.log('Model:', QWEN_MODEL);
 console.log('===================\n');
-// ===============================
+
+// ✅ ADD THIS: Root route for Vercel (add BEFORE app.listen)
+app.get('/', (req, res) => {
+    res.json({ 
+        message: '🏃 Running Trainer API',
+        status: 'Server is running!',
+        endpoints: {
+            health: '/api/health',
+            generatePlan: '/api/generate-plan (POST)'
+        }
+    });
+});
 
 // Generate training plan using Qwen API
 app.post('/api/generate-plan', async (req, res) => {
@@ -114,3 +126,6 @@ app.listen(PORT, () => {
     console.log(`🏃 Running Trainer server running on http://localhost:${PORT}`);
     console.log(`📡 Using Qwen Model: ${QWEN_MODEL}`);
 });
+
+// ✅ ADD THIS: Export app for Vercel serverless functions
+module.exports = app;
