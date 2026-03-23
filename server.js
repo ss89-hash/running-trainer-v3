@@ -114,3 +114,6 @@ app.listen(PORT, () => {
     console.log(`🏃 Running Trainer server running on http://localhost:${PORT}`);
     console.log(`📡 Using Qwen Model: ${QWEN_MODEL}`);
 });
+
+// Add this at the very end of server.js
+module.exports = app;
