@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "public/**/*.html",
+      "src": "public/**/*",
       "use": "@vercel/static"
     },
     {
@@ -12,8 +12,24 @@
   ],
   "routes": [
     {
-      "src": "/(styles\\.css|app\\.js|images/.*)",
+      "src": "^/static/(.*)",
       "dest": "/public/$1"
+    },
+    {
+      "src": "^/(.*\\.css)$",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "^/(.*\\.js)$",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "^/(.*\\.html)$",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
     },
     {
       "src": "/(.*)",
