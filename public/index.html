@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Trainer - AI Powered Training Plans</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0f',
+                            800: '#12121a',
+                            700: '#1a1a25',
+                            600: '#252532',
+                        },
+                        accent: {
+                            orange: '#ff6b35',
+                            blue: '#00d4ff',
+                            gradient: 'linear-gradient(135deg, #ff6b35 0%, #00d4ff 100%)'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                        'progress': 'progress 2s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(255, 107, 53, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(0, 212, 255, 0.5)' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        progress: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-white min-h-screen overflow-x-hidden">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-accent-orange/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-accent-blue/10 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-accent-orange/5 to-accent-blue/5 rounded-full blur-3xl animate-pulse-glow"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 border-b border-dark-600/50 backdrop-blur-sm bg-dark-900/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-orange to-accent-blue flex items-center justify-center shadow-lg shadow-accent-orange/20">
+                        <i class="fas fa-bolt text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-accent-orange to-accent-blue bg-clip-text text-transparent">RUNNING TRAINER</h1>
+                        <p class="text-xs text-gray-400">AI-Powered Coaching</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-accent-orange transition-colors duration-300">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent-blue transition-colors duration-300">
+                        <i class="fas fa-info-circle mr-2"></i>About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Hero Section -->
+        <div class="text-center mb-12 animate-fade-in">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-4">
+                <span class="bg-gradient-to-r from-accent-orange via-white to-accent-blue bg-clip-text text-transparent">
+                    Unlock Your Potential
+                </span>
+            </h2>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Get your personalized AI-powered training plan for any race distance. 
+                From 5K to Marathon, we've got you covered.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Wizard Form Card -->
+            <div class="card-glass animate-scale-in" style="animation-delay: 0.1s;">
+                <!-- Progress Bar -->
+                <div class="wizard-progress-container mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-400">Step <span id="currentStepNum">1</span> of <span id="totalSteps">4</span></span>
+                        <span class="text-sm text-accent-orange font-semibold" id="stepName">Race Selection</span>
+                    </div>
+                    <div class="h-2 bg-dark-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-accent-orange to-accent-blue rounded-full transition-all duration-500 ease-out" 
+                             id="progressBar" style="width: 25%;"></div>
+                    </div>
+                </div>
+
+                <!-- Wizard Steps -->
+                <form id="trainingForm">
+                    <!-- Step 1: Race Type -->
+                    <div class="wizard-step active" data-step="1">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center">
+                            <span class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-orange to-accent-blue flex items-center justify-center mr-3">
+                                <i class="fas fa-flag-checkered text-white"></i>
+                            </span>
+                            Choose Your Race
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="race-card" data-value="5K" onclick="selectRace('5K')">
+                                <div class="race-card-inner">
+                                    <i class="fas fa-medal text-4xl mb-3"></i>
+                                    <h4 class="font-bold text-lg">5K</h4>
+                                    <p class="text-sm text-gray-400">3.1 miles</p>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </div>
+                            </div>
+                            <div class="race-card" data-value="10K" onclick="selectRace('10K')">
+                                <div class="race-card-inner">
+                                    <i class="fas fa-trophy text-4xl mb-3"></i>
+                                    <h4 class="font-bold text-lg">10K</h4>
+                                    <p class="text-sm text-gray-400">6.2 miles</p>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </div>
+                            </div>
+                            <div class="race-card" data-value="Half Marathon" onclick="selectRace('Half Marathon')">
+                                <div class="race-card-inner">
+                                    <i class="fas fa-crown text-4xl mb-3"></i>
+                                    <h4 class="font-bold text-lg">Half</h4>
+                                    <p class="text-sm text-gray-400">13.1 miles</p>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </div>
+                            </div>
+                            <div class="race-card" data-value="Full Marathon" onclick="selectRace('Full Marathon')">
+                                <div class="race-card-inner">
+                                    <i class="fas fa-star text-4xl mb-3"></i>
+                                    <h4 class="font-bold text-lg">Full</h4>
+                                    <p class="text-sm text-gray-400">26.2 miles</p>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="raceType" name="raceType">
+                        <div class="error-message" id="raceError"></div>
+                    </div>
+
+                    <!-- Step 2: Experience Level -->
+                    <div class="wizard-step" data-step="2">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center">
+                            <span class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-orange to-accent-blue flex items-center justify-center mr-3">
+                                <i class="fas fa-user-graduate text-white"></i>
+                            </span>
+                            Your Experience Level
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="experience-card" data-value="Beginner" onclick="selectExperience('Beginner')">
+                                <div class="experience-card-inner">
+                                    <div class="flex items-center">
+                                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mr-4">
+                                            <i class="fas fa-seedling text-white text-2xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-lg">Beginner</h4>
+                                            <p class="text-sm text-gray-400">New to running or returning after a break</p>
+                                        </div>
+                                        <div class="check-icon"><i class="fas fa-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="experience-card" data-value="Intermediate" onclick="selectExperience('Intermediate')">
+                                <div class="experience-card-inner">
+                                    <div class="flex items-center">
+                                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mr-4">
+                                            <i class="fas fa-running text-white text-2xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-lg">Intermediate</h4>
+                                            <p class="text-sm text-gray-400">Running regularly for 6+ months</p>
+                                        </div>
+                                        <div class="check-icon"><i class="fas fa-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="experience-card" data-value="Advanced" onclick="selectExperience('Advanced')">
+                                <div class="experience-card-inner">
+                                    <div class="flex items-center">
+                                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mr-4">
+                                            <i class="fas fa-fire text-white text-2xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-lg">Advanced</h4>
+                                            <p class="text-sm text-gray-400">Experienced racer with multiple finishes</p>
+                                        </div>
+                                        <div class="check-icon"><i class="fas fa-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="experienceLevel" name="experienceLevel">
+                        <div class="error-message" id="experienceError"></div>
+                    </div>
+
+                    <!-- Step 3: Training Duration -->
+                    <div class="wizard-step" data-step="3">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center">
+                            <span class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-orange to-accent-blue flex items-center justify-center mr-3">
+                                <i class="fas fa-calendar-alt text-white"></i>
+                            </span>
+                            Training Duration
+                        </h3>
+                        
+                        <div class="mb-8">
+                            <label class="block text-sm text-gray-400 mb-3">
+                                Weeks Available: <span class="text-accent-orange font-bold text-lg" id="weeksValue">12</span>
+                            </label>
+                            <input type="range" id="weeksAvailable" name="weeksAvailable" 
+                                   min="8" max="20" value="12" step="2"
+                                   class="range-slider"
+                                   oninput="updateWeeksValue(this.value)">
+                            <div class="flex justify-between text-xs text-gray-500 mt-2">
+                                <span>8 weeks</span>
+                                <span>20 weeks</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-3">
+                                <i class="fas fa-calendar-week mr-2"></i>Running Days Per Week
+                            </label>
+                            <div class="grid grid-cols-4 gap-3">
+                                <button type="button" class="day-card" data-value="3" onclick="selectDays('3')">
+                                    <span class="text-2xl font-bold">3</span>
+                                    <span class="text-xs text-gray-400">days</span>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </button>
+                                <button type="button" class="day-card" data-value="4" onclick="selectDays('4')">
+                                    <span class="text-2xl font-bold">4</span>
+                                    <span class="text-xs text-gray-400">days</span>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </button>
+                                <button type="button" class="day-card" data-value="5" onclick="selectDays('5')">
+                                    <span class="text-2xl font-bold">5</span>
+                                    <span class="text-xs text-gray-400">days</span>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </button>
+                                <button type="button" class="day-card" data-value="6" onclick="selectDays('6')">
+                                    <span class="text-2xl font-bold">6</span>
+                                    <span class="text-xs text-gray-400">days</span>
+                                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="runningDaysPerWeek" name="runningDaysPerWeek">
+                    </div>
+
+                    <!-- Step 4: Goals & Mileage -->
+                    <div class="wizard-step" data-step="4">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center">
+                            <span class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-orange to-accent-blue flex items-center justify-center mr-3">
+                                <i class="fas fa-bullseye text-white"></i>
+                            </span>
+                            Your Goals
+                        </h3>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-3">
+                                <i class="fas fa-tachometer-alt mr-2"></i>Current Weekly Mileage
+                            </label>
+                            <div class="relative">
+                                <input type="text" id="currentMileage" name="currentMileage"
+                                       class="input-field" placeholder="e.g., 15 miles/week">
+                                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Optional - helps customize your plan</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-3">
+                                <i class="fas fa-flag mr-2"></i>Primary Goal
+                            </label>
+                            <div class="relative">
+                                <input type="text" id="goal" name="goal"
+                                       class="input-field" placeholder="e.g., Finish the race, PR, Sub-2 hour half...">
+                                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">What do you want to achieve?</p>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-between mt-8 pt-6 border-t border-dark-600">
+                    <button type="button" id="prevBtn" onclick="previousStep()" 
+                            class="btn-secondary hidden">
+                        <i class="fas fa-arrow-left mr-2"></i>Previous
+                    </button>
+                    <button type="button" id="nextBtn" onclick="nextStep()" 
+                            class="btn-primary ml-auto">
+                        Next<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button type="button" id="generateBtn" onclick="generatePlan()" 
+                            class="btn-glow hidden">
+                        <i class="fas fa-magic mr-2"></i>Generate Plan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plan Display Card -->
+            <div class="card-glass animate-scale-in" style="animation-delay: 0.2s;">
+                <div class="card-header-glass">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i class="fas fa-file-alt mr-3 text-accent-orange"></i>
+                        Your Training Plan
+                    </h3>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Placeholder State -->
+                    <div id="placeholder" class="placeholder-state">
+                        <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-accent-orange/20 to-accent-blue/20 flex items-center justify-center">
+                            <i class="fas fa-clipboard-list text-5xl text-accent-orange"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Ready to Create Your Plan</h4>
+                        <p class="text-gray-400 text-center">Complete the wizard to generate your personalized AI-powered training plan</p>
+                        <div class="mt-6 flex justify-center space-x-4">
+                            <div class="feature-badge">
+                                <i class="fas fa-brain text-accent-blue"></i>
+                                <span>AI Powered</span>
+                            </div>
+                            <div class="feature-badge">
+                                <i class="fas fa-check-circle text-accent-orange"></i>
+                                <span>Personalized</span>
+                            </div>
+                            <div class="feature-badge">
+                                <i class="fas fa-print text-gray-400"></i>
+                                <span>Printable</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loading" class="loading-state hidden">
+                        <div class="w-24 h-24 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 rounded-full border-4 border-dark-600"></div>
+                            <div class="absolute inset-0 rounded-full border-4 border-t-accent-orange border-r-accent-blue border-b-transparent border-l-transparent animate-spin"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-running text-3xl animate-pulse"></i>
+                            </div>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-center">Creating Your Plan</h4>
+                        <p class="text-gray-400 text-center">Our AI is crafting your personalized training plan...</p>
+                        <div class="mt-4 flex justify-center">
+                            <div class="flex space-x-1">
+                                <span class="w-2 h-2 bg-accent-orange rounded-full animate-bounce" style="animation-delay: 0s;"></span>
+                                <span class="w-2 h-2 bg-accent-blue rounded-full animate-bounce" style="animation-delay: 0.2s;"></span>
+                                <span class="w-2 h-2 bg-accent-orange rounded-full animate-bounce" style="animation-delay: 0.4s;"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="error" class="error-state hidden">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2 text-center">Oops! Something went wrong</h4>
+                        <p id="errorMessage" class="text-gray-400 text-center text-sm"></p>
+                        <button onclick="retryGenerate()" class="btn-secondary mt-4">
+                            <i class="fas fa-redo mr-2"></i>Try Again
+                        </button>
+                    </div>
+
+                    <!-- Plan Content -->
+                    <div id="planContent" class="plan-content hidden">
+                        <div id="planText" class="prose prose-invert max-w-none"></div>
+                        
+                        <div class="action-buttons mt-6 pt-6 border-t border-dark-600">
+                            <button onclick="printPlan()" class="btn-action">
+                                <i class="fas fa-print mr-2"></i>Print Plan
+                            </button>
+                            <button onclick="copyPlan()" class="btn-action">
+                                <i class="fas fa-copy mr-2"></i>Copy to Clipboard
+                            </button>
+                            <button onclick="resetForm()" class="btn-action-secondary">
+                                <i class="fas fa-redo mr-2"></i>Create New Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-dark-600/50 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-orange to-accent-blue flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-sm"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm">Powered by Qwen AI</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <span class="text-gray-500 text-sm">© 2026 Running Trainer. All rights reserved.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- App JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
