@@ -462,35 +462,145 @@
     <!-- App JavaScript -->
     <script src="/app.js"></script>
 <script>
-// Copy to clipboard function
+// Improved Copy Function
 async function copyTrainingPlan() {
-    const plan = document.querySelector('.training-plan');
-    if (!plan) return alert('No plan to copy!');
+    // Try multiple possible selectors
+    const selectors = [
+        '.training-plan',
+        '.plan-content', 
+        '#trainingPlan',
+        '.result-container',
+        '.plan-display',
+        '[class*="plan"]',
+        '.col-md-6:last-child',
+        '.col-lg-6:last-child'
+    ];
     
+    let planElement = null;
+    let usedSelector = '';
+    
+    for (const selector of selectors) {
+        planElement = document.querySelector(selector);
+        if (planElement && planElement.innerText.trim().length > 50) {
+            usedSelector = selector;
+            break;
+        }
+    }
+    
+    if (!planElement || planElement.innerText.trim().length === 0) {
+        // Last resort: try to find any div with substantial text content
+        const allDivs = document.querySelectorAll('div');
+        for (const div of allDivs) {
+            const text = div.innerText;
+            if (text.includes('Taper') || text.includes('Week') || text.includes('mi') || text.includes('km')) {
+                planElement = div;
+                console.log('Found plan in:', div.className);
+                break;
+            }
+        }
+    }
+    
+    if (!planElement) {
+        alert('No training plan found! Please make sure a plan has been generated.');
+        return;
+    }
+
+    const textToCopy = planElement.innerText;
+
     try {
-        await navigator.clipboard.writeText(plan.innerText);
-        alert('✓ Copied to clipboard!');
+        // Try modern Clipboard API
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(textToCopy);
+        } else {
+            // Fallback method
+            fallbackCopy(textToCopy);
+        }
+        
+        // Show success feedback
+        const copyBtn = document.querySelector('[onclick*="copy"], .copy-button, button:nth-of-type(2)');
+        if (copyBtn) {
+            const originalHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = '✓ Copied!';
+            copyBtn.style.background = '#10b981';
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+                copyBtn.style.background = '';
+            }, 2000);
+        }
+        
     } catch (err) {
-        // Fallback
-        const textarea = document.createElement('textarea');
-        textarea.value = plan.innerText;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        alert('✓ Copied to clipboard!');
+        console.error('Copy failed:', err);
+        fallbackCopy(textToCopy);
     }
 }
 
-// Replace the copy button onclick
+function fallbackCopy(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    textArea.style.top = '0';
+    document.body.appendChild(textArea);
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (!successful) throw new Error('execCommand failed');
+    } catch (err) {
+        console.error('Fallback copy failed:', err);
+        alert('Failed to copy. Please select text manually and press Ctrl+C.');
+        return;
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// Auto-attach to copy button when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    const copyBtn = document.querySelector('[onclick*="copy"]');
+    // Find copy button and attach event
+    const copyBtn = Array.from(document.querySelectorAll('button')).find(btn => 
+        btn.innerText.toLowerCase().includes('copy')
+    );
+    
     if (copyBtn) {
-        copyBtn.onclick = copyTrainingPlan;
+        copyBtn.addEventListener('click', copyTrainingPlan);
+        copyBtn.removeAttribute('onclick'); // Remove inline onclick if exists
     }
 });
+</script>
+
+<script>
+// Debug: Find the training plan element
+setTimeout(() => {
+    console.log('=== Looking for training plan ===');
+    
+    // Check common selectors
+    const possibleSelectors = [
+        '.training-plan',
+        '.plan-content',
+        '#trainingPlan',
+        '.result',
+        '.output'
+    ];
+    
+    possibleSelectors.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) {
+            console.log(`Found: ${sel}`, el);
+            console.log('Text length:', el.innerText.length);
+        }
+    });
+    
+    // Find divs with training-related text
+    const allDivs = document.querySelectorAll('div');
+    allDivs.forEach((div, index) => {
+        const text = div.innerText;
+        if (text.includes('Taper') || text.includes('Week') && text.length > 100) {
+            console.log(`Possible plan container #${index}:`, div.className, 'Text length:', text.length);
+        }
+    });
+}, 2000);
 </script>
     
 </body>
