@@ -76,8 +76,8 @@ Format the response in a clear, structured way with markdown-style headers and b
                         content: prompt
                     }
                 ],
-                temperature: 0.7,
-                max_tokens: 2000
+                temperature: 0.9,
+                max_tokens: 4000
             },
             {
                 headers: {
