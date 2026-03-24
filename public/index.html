@@ -461,5 +461,37 @@
     
     <!-- App JavaScript -->
     <script src="/app.js"></script>
+<script>
+// Copy to clipboard function
+async function copyTrainingPlan() {
+    const plan = document.querySelector('.training-plan');
+    if (!plan) return alert('No plan to copy!');
+    
+    try {
+        await navigator.clipboard.writeText(plan.innerText);
+        alert('✓ Copied to clipboard!');
+    } catch (err) {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = plan.innerText;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('✓ Copied to clipboard!');
+    }
+}
+
+// Replace the copy button onclick
+document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.querySelector('[onclick*="copy"]');
+    if (copyBtn) {
+        copyBtn.onclick = copyTrainingPlan;
+    }
+});
+</script>
+    
 </body>
 </html>
